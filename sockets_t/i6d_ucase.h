@@ -1,12 +1,12 @@
 /*
  * =====================================================================================
  *
- *       Filename:  fork_test.c
+ *       Filename:  i6d_ucase.h
  *
  *    Description:  
  *
  *        Version:  1.0
- *        Created:  09/29/2014 05:23:59 PM
+ *        Created:  10/09/2014 07:38:55 PM
  *       Revision:  none
  *       Compiler:  gcc
  *
@@ -16,21 +16,12 @@
  * =====================================================================================
  */
 
-#include <stdio.h>
-#include <sys/types.h>
-#include <unistd.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <sys/socket.h>
+#include <ctype.h>
+#include "../lib/tlpi_hdr.h"
 
-int count = 0;
+#define BUF_SIZE 10		/* Maximum size of messages exchanged between client and server*/
 
-int main(void) {
-	int i;
-	for (i = 0; i < 2; i++) {
-		fork();
-		count++;
-		printf("+$ %d\t", count);
-	}
-
-	printf("  --| \n");
-
-	return 0;
-}
+#define PORT_NUM 5000

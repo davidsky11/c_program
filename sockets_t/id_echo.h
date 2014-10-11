@@ -1,12 +1,12 @@
 /*
  * =====================================================================================
  *
- *       Filename:  fork_test.c
+ *       Filename:  id_echo.h
  *
  *    Description:  
  *
  *        Version:  1.0
- *        Created:  09/29/2014 05:23:59 PM
+ *        Created:  10/10/2014 02:36:43 PM
  *       Revision:  none
  *       Compiler:  gcc
  *
@@ -15,22 +15,10 @@
  *
  * =====================================================================================
  */
+#include "inet_sockets.h"
+#include "../lib/tlpi_hdr.h"
 
-#include <stdio.h>
-#include <sys/types.h>
-#include <unistd.h>
+#define SERVICE		"echo"		/* Name of UDP service */
 
-int count = 0;
-
-int main(void) {
-	int i;
-	for (i = 0; i < 2; i++) {
-		fork();
-		count++;
-		printf("+$ %d\t", count);
-	}
-
-	printf("  --| \n");
-
-	return 0;
-}
+#define BUF_SIZE	500			/* Maximum size of datagrams that can
+									be read by client and server */

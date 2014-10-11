@@ -1,12 +1,12 @@
 /*
  * =====================================================================================
  *
- *       Filename:  fork_test.c
+ *       Filename:  print_int.c
  *
  *    Description:  
  *
  *        Version:  1.0
- *        Created:  09/29/2014 05:23:59 PM
+ *        Created:  10/09/2014 01:37:11 PM
  *       Revision:  none
  *       Compiler:  gcc
  *
@@ -16,21 +16,24 @@
  * =====================================================================================
  */
 
+#include <stdlib.h>
 #include <stdio.h>
-#include <sys/types.h>
-#include <unistd.h>
 
-int count = 0;
+#define SIZEOF(arr)		(sizeof(arr)/sizeof(arr[0]))
+#define PrintInt(expr)	printf("%s:%d\n", #expr,(expr))
 
-int main(void) {
+int main() {
+
+	/* the number begin with '0' is octal number */
+	int pot[] = {
+		0001,
+		0010,
+		0100,
+		1000
+	};
 	int i;
-	for (i = 0; i < 2; i++) {
-		fork();
-		count++;
-		printf("+$ %d\t", count);
-	}
-
-	printf("  --| \n");
+	for (i=0; i<SIZEOF(pot);i++)
+	  PrintInt(pot[i]);
 
 	return 0;
 }

@@ -1,12 +1,12 @@
 /*
  * =====================================================================================
  *
- *       Filename:  fork_test.c
+ *       Filename:  switch_test.c
  *
  *    Description:  
  *
  *        Version:  1.0
- *        Created:  09/29/2014 05:23:59 PM
+ *        Created:  10/09/2014 11:38:53 AM
  *       Revision:  none
  *       Compiler:  gcc
  *
@@ -17,20 +17,17 @@
  */
 
 #include <stdio.h>
-#include <sys/types.h>
-#include <unistd.h>
 
-int count = 0;
-
-int main(void) {
-	int i;
-	for (i = 0; i < 2; i++) {
-		fork();
-		count++;
-		printf("+$ %d\t", count);
+int main() {
+	int a = 1;
+	switch (a) {
+		int b = 20;
+		case 1:
+			printf("b is %d\n", b);
+			break;
+		default:
+			printf("b is %d\n", b);
+			break;
 	}
-
-	printf("  --| \n");
-
 	return 0;
 }

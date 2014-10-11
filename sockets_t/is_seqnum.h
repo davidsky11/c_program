@@ -1,12 +1,12 @@
 /*
  * =====================================================================================
  *
- *       Filename:  fork_test.c
+ *       Filename:  is_seqnum.h
  *
  *    Description:  
  *
  *        Version:  1.0
- *        Created:  09/29/2014 05:23:59 PM
+ *        Created:  10/10/2014 08:13:47 AM
  *       Revision:  none
  *       Compiler:  gcc
  *
@@ -15,22 +15,12 @@
  *
  * =====================================================================================
  */
+#include <netinet/in.h>
+#include <sys/socket.h>
+#include <signal.h>
+#include "read_line.h"
+#include "../lib/tlpi_hdr.h"
 
-#include <stdio.h>
-#include <sys/types.h>
-#include <unistd.h>
+#define PORT_NUM "50000"
 
-int count = 0;
-
-int main(void) {
-	int i;
-	for (i = 0; i < 2; i++) {
-		fork();
-		count++;
-		printf("+$ %d\t", count);
-	}
-
-	printf("  --| \n");
-
-	return 0;
-}
+#define INT_LEN 30

@@ -1,12 +1,12 @@
 /*
  * =====================================================================================
  *
- *       Filename:  fork_test.c
+ *       Filename:  read_line.h
  *
  *    Description:  
  *
  *        Version:  1.0
- *        Created:  09/29/2014 05:23:59 PM
+ *        Created:  10/10/2014 08:24:56 AM
  *       Revision:  none
  *       Compiler:  gcc
  *
@@ -15,22 +15,11 @@
  *
  * =====================================================================================
  */
+#ifndef READ_LINE_H
+#define READ_LINE_H
 
-#include <stdio.h>
 #include <sys/types.h>
-#include <unistd.h>
 
-int count = 0;
+ssize_t readLine(int fd, void *buffer, size_t n);
 
-int main(void) {
-	int i;
-	for (i = 0; i < 2; i++) {
-		fork();
-		count++;
-		printf("+$ %d\t", count);
-	}
-
-	printf("  --| \n");
-
-	return 0;
-}
+#endif
