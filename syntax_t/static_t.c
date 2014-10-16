@@ -1,12 +1,12 @@
 /*
  * =====================================================================================
  *
- *       Filename:  fork_test.c
+ *       Filename:  static_t.c
  *
  *    Description:  
  *
  *        Version:  1.0
- *        Created:  09/29/2014 05:23:59 PM
+ *        Created:  10/13/2014 09:08:49 AM
  *       Revision:  none
  *       Compiler:  gcc
  *
@@ -17,18 +17,28 @@
  */
 
 #include <stdio.h>
-#include <sys/types.h>
-#include <unistd.h>
 
-int main(void)
-{
-	int i;
-	printf("curr: %ld\t ppid: %ld\n", (long) getpid(), (long) getppid());
-	for (i = 0; i < 2; i++)
-	{
-		fork();
-		printf("ppid: %ld, pid: %ld, i: %d n", (long) getppid(), (long) getpid(), i);
+static int j;
+int i;
+
+void fun1(void) {
+	static int i = 0;
+	i++;
+	printf("i = %d\t", i);
+}
+
+void fun2(void) {
+	j = 0;
+	j++;
+	printf("j = %d\n", j);
+}
+
+int main() {
+	int k;
+	for (k=0; k<10; k++) {
+		fun1();
+		fun2();
 	}
-	sleep(10);
+
 	return 0;
 }

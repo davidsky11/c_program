@@ -1,12 +1,12 @@
 /*
  * =====================================================================================
  *
- *       Filename:  fork_test.c
+ *       Filename:  svmsg_rm.c
  *
  *    Description:  
  *
  *        Version:  1.0
- *        Created:  09/29/2014 05:23:59 PM
+ *        Created:  10/16/2014 03:31:10 PM
  *       Revision:  none
  *       Compiler:  gcc
  *
@@ -16,19 +16,20 @@
  * =====================================================================================
  */
 
-#include <stdio.h>
 #include <sys/types.h>
-#include <unistd.h>
+#include <sys/msg.h>
+#include "../lib/tlpi_hdr.h"
 
-int main(void)
+int
+main(int argc, char *argv[])
 {
-	int i;
-	printf("curr: %ld\t ppid: %ld\n", (long) getpid(), (long) getppid());
-	for (i = 0; i < 2; i++)
-	{
-		fork();
-		printf("ppid: %ld, pid: %ld, i: %d n", (long) getppid(), (long) getpid(), i);
-	}
-	sleep(10);
-	return 0;
+	int j;
+	if (argc > 1 && strcmp(argv[1], "--help") == 0)
+	  usageErr("%s [msqid...]\n", argv[0]);
+
+	for (j = 0; j < argc; j++)
+	  if (msgctl(getInt(argv[j], 0, "msqid"), IPC_RMID, NULL) == -1)
+		errExit("msgctl");
+
+	exit(EXIT_SUCCESS);
 }

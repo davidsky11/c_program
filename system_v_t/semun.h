@@ -1,12 +1,12 @@
 /*
  * =====================================================================================
  *
- *       Filename:  fork_test.c
+ *       Filename:  semun.h
  *
  *    Description:  
  *
  *        Version:  1.0
- *        Created:  09/29/2014 05:23:59 PM
+ *        Created:  10/15/2014 01:58:36 PM
  *       Revision:  none
  *       Compiler:  gcc
  *
@@ -15,20 +15,19 @@
  *
  * =====================================================================================
  */
+#ifndef SEMUN_H
+#define SEMUN_H
 
-#include <stdio.h>
 #include <sys/types.h>
-#include <unistd.h>
+#include <sys/sem.h>
 
-int main(void)
-{
-	int i;
-	printf("curr: %ld\t ppid: %ld\n", (long) getpid(), (long) getppid());
-	for (i = 0; i < 2; i++)
-	{
-		fork();
-		printf("ppid: %ld, pid: %ld, i: %d n", (long) getppid(), (long) getpid(), i);
-	}
-	sleep(10);
-	return 0;
-}
+union semun {					/* Used in calls to semctl() */
+	int					val;
+	struct semid_ds *	buf;
+	unsigned short *	array;
+#if defined(__linux__)
+	struct seminfo *	__buf;
+#endif
+};
+
+#endif

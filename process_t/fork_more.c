@@ -22,12 +22,13 @@
 int main(int argc, char *argv[]) 
 {
 	pid_t fd1, fd2, fd3;
+	printf("current pid: %ld\n", (long) getpid());
 
 	fd1 = fork();
-	printf("fd1 ==> %ld\n", (long) fd1);
+	printf("ppid: %ld\t fd1 ==> %ld\n", (long) getppid(), (long) fd1);
 
 	fd2 = fork();
-	printf("fd2 ==> %ld\n", (long) fd2);
+	printf("ppid: %ld\t fd2 ==> %ld\n", (long) getppid(), (long) fd2);
 
 //	fd3 = fork();
 //	printf("fd3 ==> %ld\n", (long) fd3);

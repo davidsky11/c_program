@@ -22,7 +22,19 @@ int main() {
 	int i;
 	i = 10;
 	printf("i : %d\n", i);
-	printf("sizeof(i++) is : %d\n", sizeof(i++));
+	printf("sizeof(i++) is : %d\n", (int) sizeof(i++));
 	printf("i : %d\n", i);
+	
+	int *p = NULL;
+	printf("sizeof(*p) = %d, sizeof(p) = %d\n", (int) sizeof(*p), 
+				(int) sizeof(p));
+
+	int a[100];
+	printf("sizeof(a) = %d, sizeof(a[100]) = %d\n", (int) sizeof(a),
+				(int) sizeof(a[100]));
+
+	printf("sizeof(&a) = %d, sizeof(&a[0]) = %d\n", (int) sizeof(&a), 
+				(int) sizeof(&a[0]));
+
 	return 0;
 }
