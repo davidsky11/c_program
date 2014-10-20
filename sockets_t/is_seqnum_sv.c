@@ -92,7 +92,7 @@ main(int argc, char *argv[])
 		addrlen = sizeof(struct sockaddr_storage);
 		cfd = accept(lfd, (struct sockaddr *) &claddr, &addrlen);
 		if (cfd == -1) {
-			errMsg("accrpt");
+			errMsg("accept");
 			continue;
 		}
 
