@@ -50,7 +50,7 @@ main(int argc, char *argv[])
 		if (h->h_addrtype == AF_INET || h->h_addrtype == AF_INET6) {
 			printf("	address(es):		");
 			for (pp = h->h_addr_list; *pp != NULL; pp++)
-			  printf("%s", inet_ntop(h->h_addrtype, *pp,
+			  printf("%s ", inet_ntop(h->h_addrtype, *pp,
 							  str, INET6_ADDRSTRLEN));
 			printf("\n");
 		}

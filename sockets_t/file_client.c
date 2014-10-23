@@ -21,9 +21,11 @@
 int 
 main(int argc, char *argv[])
 {
-	int cfd;
+	int cfd, receBytes;
+	FILE *fp;
 	socklen_t len;
 	Boolean isExist = FALSE;
+	Boolean isOpened = FALSE;
 
 	// 设置一个socket地址结构cli_addr, 代表客户机的interner地址和端口
 	struct sockaddr_in serv_addr, cli_addr;
@@ -31,7 +33,7 @@ main(int argc, char *argv[])
 	cli_addr.sin_family = AF_INET;		// internet协议族
 	cli_addr.sin_addr.s_addr = htons(INADDR_ANY);	
 						// INADDR_ANY表示自动获取本机地址
-	cli_addr.sin_port = htons(CLIENT_PORT); //htons(0);		
+	cli_addr.sin_port = htons(0); //htons(0);		
 						// auto allocated, 让系统自动分配一个空闲端口
 						
 	// 创建用于internet的流协议(TCP)类型socket，用cfd代表客户端socket
@@ -67,16 +69,14 @@ main(int argc, char *argv[])
 	printf("Please input file name on Server:\t");
 	scanf("%s", filename);
 
+	receBytes = 0;
+
 	char buf[BUF_SIZE];
 	bzero(buf, sizeof(buf));
 	strncpy(buf, filename, 
 				strlen(filename) > BUF_SIZE ? BUF_SIZE : strlen(filename));
 	// 向服务器发送buffer中的数据，此时buffer中存放的是客户端需要接收的文件的名字
 	send(cfd, buf, BUF_SIZE, 0);
-
-	FILE *fp = fopen(filename, "w");
-	if (fp == NULL)
-	  errExit("fopen");
 
 	// 从服务器端接收数据到buffer中
 	bzero(buf, sizeof(buf));
@@ -90,8 +90,9 @@ main(int argc, char *argv[])
 		}
 		else 
 		{
+			receBytes += length;
 			if (strncmp(NOT_FOUND, buf, sizeof(NOT_FOUND)) == 0) {
-				printf("This file '%s' is can't located on server!\n", filename);
+				printf("File '%s' can't located on server!\n", filename);
 				isExist = FALSE;
 				break;
 			}
@@ -102,6 +103,13 @@ main(int argc, char *argv[])
 		}
 
 		if (isExist) {
+			if (!isOpened) {
+				fp = fopen(filename, "w");
+				if (fp == NULL)
+				  errExit("fopen");
+				isOpened = TRUE;
+			}
+
 			int write_length = fwrite(buf, sizeof(char), length, fp);
 			if (write_length < 0)
 			{
@@ -112,9 +120,10 @@ main(int argc, char *argv[])
 		}
 	}
 
-	printf("Receive File:\t %s From Server [%s] Finished!\n", filename, argv[1]);
-
-	fclose(fp);
+	if (isOpened) {
+		printf("Receive File:\t %s (%d bytes) From Server [%s] Finished!\n", filename, receBytes, argv[1]);
+		fclose(fp);
+	}
 	close(cfd);
 
 	return 0;
