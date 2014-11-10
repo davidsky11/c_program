@@ -21,7 +21,7 @@
 
 static void *threadFunc(void *arg) {
 	char *s = (char *) arg;
-printf("%s", s);
+	printf("%s", s);
 
 	return (void *) strlen(s);
 }
