@@ -1,3 +1,5 @@
+# -*- makefile -*-
+
 CC = gcc
 CFLAGS = -lpthread
 
