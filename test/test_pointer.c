@@ -69,5 +69,15 @@ int main(int argc, char *argv[])
 	
 	printf("%d - %d\n", **q3_, *p3_);
 	
+	printf("###############################\n");
+	
+	int m[4] = {1, 2, 3, 4};
+	
+	int *ptr1 = (int *) (&m + 1);
+	int *ptr2 = (int *) (m);
+	
+	
+	printf("%x, %x\n", ptr1[-1], *(ptr2+1));
+	
 	return 0;
 }
